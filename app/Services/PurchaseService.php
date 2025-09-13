@@ -15,15 +15,10 @@ class PurchaseService
     }
     public function storePurchase(array $data): Purchase
     {
-        $totalAmount = collect($data['items'])
-            ->sum(fn($item) => $item['qty'] * $item['price']);
-
         $purchase = Purchase::create([
             'purchase_id' => 'PUR-' . strtoupper(uniqid()),
-            'supplier_id' => $data['supplier_id'],
             'purchase_date' => $data['purchase_date'],
             'items' => json_encode($data['items']),
-            'total_amount' => $totalAmount,
             'status' => 'pending',
         ]);
 

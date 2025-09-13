@@ -80,6 +80,11 @@
                                                       <i
                                                             class="me-2 text-warning fas fa-map-marker-alt"></i>{{ $lead->address ?? 'No Address' }}
                                                 </div>
+                                                 <!-- Reference name -->
+                                                <div class="text-muted small">
+                                                      <i
+                                                            class="me-2 text-secondary fas fa-user"></i>{{ $lead->reference_name ?? 'No Reference' }}
+                                                </div>
 
                                                 <!-- Action Buttons -->
                                                 <div class="d-flex justify-content-center gap-2 mt-3">

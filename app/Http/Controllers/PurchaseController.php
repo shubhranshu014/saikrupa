@@ -19,16 +19,15 @@ class PurchaseController extends Controller
 
     public function purchaseList()
     {
-        $purchases = Purchase::with('supplier')->latest()->get(); // Fetch all purchases with supplier details
+        $purchases = Purchase::latest()->get(); // Fetch all purchases with supplier details
         // Logic to display the purchase page
         return view('superadmin.purchaselist')->with(compact('purchases'));
     }
 
     public function createpurchase()
     {
-        $suppliers = \App\Models\Supplier::all(); // Fetch all suppliers for the dropdown
         // Logic to display the create purchase page
-        return view('superadmin.createpurchase')->with(compact('suppliers'));
+        return view('superadmin.createpurchase');
     }
 
     public function storepurchase(StorePurchaseRequest $request)

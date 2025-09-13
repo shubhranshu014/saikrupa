@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->text('address')->nullable();
             $table->date('date');
             $table->string('lead_sources')->nullable();
+            $table->string('reference_name')->nullable();
             $table->timestamps();
         });
     }

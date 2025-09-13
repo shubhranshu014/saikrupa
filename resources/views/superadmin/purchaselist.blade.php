@@ -22,10 +22,8 @@
                 <thead class="table-light">
                     <tr>
                         <th>Purchase ID</th>
-                        <th>Supplier</th>
                         <th>Status</th>
                         <th>Total Items</th>
-                        <th>Total Amount</th>
                         <th>Created At</th>
                         <th>PDF</th>
                     </tr>
@@ -34,7 +32,6 @@
                     @forelse($purchases as $purchase)
                         <tr>
                             <td>{{ $purchase->purchase_id }}</td>
-                            <td>{{ $purchase->supplier->supplier_name ?? 'N/A' }}</td>
                             <td>
                                 @if($purchase->status == 'pending')
                                     <span class="bg-warning badge">Pending</span>
@@ -48,7 +45,6 @@
                                 @endif
                             </td>
                             <td>{{ count(json_decode($purchase->items, true) ?? []) }}</td>
-                            <td>₹{{ number_format($purchase->total_amount, 2) }}</td>
                             <td>{{ $purchase->created_at->format('d M Y') }}</td>
                             <td>
                                 <a href="{{ route('purchases.download-pdf', $purchase->id) }}" class="btn btn-sm btn-primary">

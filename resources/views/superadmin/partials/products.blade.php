@@ -22,12 +22,12 @@
           <!-- Width -->
           <div class="col-md-3">
                <label class="form-label fw-semibold">Width (mm)</label>
-               <input type="number" name="width" class="form-control" min="1" required>
+               <input type="number" name="width" id="width" class="form-control" min="1" required>
           </div>
           <!-- Height -->
           <div class="col-md-3">
                <label class="form-label fw-semibold">Height (mm)</label>
-               <input type="number" name="height" class="form-control" min="1" required>
+               <input type="number" name="height" id="height" class="form-control" min="1" required>
           </div>
 
           <!-- Quantity -->
@@ -65,7 +65,7 @@
           <!-- Square Feet -->
           <div class="col-md-3">
                <label class="form-label fw-semibold">Square Feet</label>
-               <input type="number" name="square_feet" class="form-control" min="1" step="0.01" required>
+               <input type="number" name="square_feet" id="square_feet" class="form-control" min="1" step="0.01" required>
           </div>
 
           <!-- Position -->
@@ -123,37 +123,37 @@
                </thead>
                <tbody>
                     @forelse($lead->leadDetails as $index => $detail)
-                         <tr class="text-center">
-                              <td>{{ $index + 1 }}</td>
-                              <td>{{ ucfirst($detail->product_category) }}</td>
-                              <td>{{ $detail->width }}</td>
-                              <td>{{ $detail->height }}</td>
-                              <td>{{ $detail->quantity }}</td>
-                              <td>{{ ucfirst($detail->design) }}</td>
-                              <td>{{ $detail->glass_specification }}</td>
-                              <td>{{ $detail->location }}</td>
-                              <td>{{ number_format($detail->square_feet, 2) }}</td>
-                              <td>{{ ucfirst($detail->position) }}</td>
-                              <td>{{ $detail->date }}</td>
-                              <td>
-                                   <!-- Edit button -->
-                                   <button class="me-1 btn btn-sm btn-warning">
-                                        <i class="fas fa-edit"></i>
+                    <tr class="text-center">
+                         <td>{{ $index + 1 }}</td>
+                         <td>{{ ucfirst($detail->product_category) }}</td>
+                         <td>{{ $detail->width }}</td>
+                         <td>{{ $detail->height }}</td>
+                         <td>{{ $detail->quantity }}</td>
+                         <td>{{ ucfirst($detail->design) }}</td>
+                         <td>{{ $detail->glass_specification }}</td>
+                         <td>{{ $detail->location }}</td>
+                         <td>{{ number_format($detail->square_feet, 2) }}</td>
+                         <td>{{ ucfirst($detail->position) }}</td>
+                         <td>{{ $detail->date }}</td>
+                         <td>
+                              <!-- Edit button -->
+                              <button class="me-1 btn btn-sm btn-warning">
+                                   <i class="fas fa-edit"></i>
+                              </button>
+                              <!-- Delete button -->
+                              <form action="" method="POST" style="display:inline;">
+                                   @csrf
+                                   @method('DELETE')
+                                   <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                        <i class="fas fa-trash"></i>
                                    </button>
-                                   <!-- Delete button -->
-                                   <form action="" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
-                                             <i class="fas fa-trash"></i>
-                                        </button>
-                                   </form>
-                              </td>
-                         </tr>
+                              </form>
+                         </td>
+                    </tr>
                     @empty
-                         <tr>
-                              <td colspan="11" class="text-muted text-center">No products added yet.</td>
-                         </tr>
+                    <tr>
+                         <td colspan="11" class="text-muted text-center">No products added yet.</td>
+                    </tr>
                     @endforelse
                </tbody>
           </table>
@@ -162,21 +162,40 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-     $(document).ready(function () {
+     $(document).ready(function() {
           // Show product details by default
           $('#product-details-section').show();
           $('#product-list-section').hide();
 
           // When clicking the "Product List" button
-          $('#product-list-button').click(function () {
+          $('#product-list-button').click(function() {
                $('#product-details-section').hide();
                $('#product-list-section').show();
           });
 
           // When clicking the "Add Product" button/icon
-          $('#add-product-button').click(function () {
+          $('#add-product-button').click(function() {
                $('#product-list-section').hide();
                $('#product-details-section').show();
           });
+
+          // Calculate Square Feet Automatically
+          function calculateSquareFeet() {
+               let width = parseFloat($('#width').val());
+               let height = parseFloat($('#height').val());
+
+               if (!isNaN(width) && !isNaN(height) && width > 0 && height > 0) {
+                    // Convert mm to feet (1 mm = 0.00328084 ft)
+                    let widthFeet = width * 0.00328084;
+                    let heightFeet = height * 0.00328084;
+                    let squareFeet = widthFeet * heightFeet;
+
+                    $('#square_feet').val(squareFeet.toFixed(2));
+               } else {
+                    $('#square_feet').val('');
+               }
+          }
+
+          $('#width, #height').on('input', calculateSquareFeet);
      });
 </script>

@@ -22,12 +22,10 @@ class StorePurchaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'supplier_id' => 'required|exists:suppliers,id',
             'purchase_date' => 'required|date',
             'items' => 'required|array|min:1',
             'items.*.name' => 'required|string|max:255',
             'items.*.qty' => 'required|integer|min:1',
-            'items.*.price' => 'required|numeric|min:0',
         ];
     }
 }

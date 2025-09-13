@@ -14,16 +14,6 @@
                        @csrf
 
                        <div class="mb-3">
-                              <label>Supplier</label>
-                              <select name="supplier_id" class="form-control" required>
-                                    <option value="">Select Supplier</option>
-                                    @foreach($suppliers as $supplier)
-                                                  <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
-                                           @endforeach
-                              </select>
-                       </div>
-
-                       <div class="mb-3">
                               <label>Purchase Date</label>
                               <input type="date" name="purchase_date" class="form-control" required>
                        </div>
@@ -42,11 +32,6 @@
                                                 <label class="form-label fw-semibold">Quantity</label>
                                                 <input type="number" name="items[0][qty]" class="form-control" placeholder="0"
                                                        required>
-                                          </div>
-                                          <div class="col-md-3">
-                                                <label class="form-label fw-semibold">Price</label>
-                                                <input type="number" step="0.01" name="items[0][price]" class="form-control"
-                                                       placeholder="0.00" required>
                                           </div>
                                           <div class="d-flex align-items-end col-md-2">
                                                 <button type="button" class="w-100 btn btn-danger remove-item">
@@ -86,10 +71,6 @@
                                     <div class="col-md-3">
                                           <label class="form-label fw-semibold">Quantity</label>
                                           <input type="number" name="items[${itemIndex}][qty]" class="form-control" placeholder="0" required>
-                                    </div>
-                                    <div class="col-md-3">
-                                          <label class="form-label fw-semibold">Price</label>
-                                          <input type="number" step="0.01" name="items[${itemIndex}][price]" class="form-control" placeholder="0.00" required>
                                     </div>
                                     <div class="d-flex align-items-end col-md-2">
                                           <button type="button" class="w-100 btn btn-danger remove-item">
